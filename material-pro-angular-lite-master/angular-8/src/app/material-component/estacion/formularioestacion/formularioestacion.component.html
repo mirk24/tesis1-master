@@ -1,0 +1,85 @@
+<form [formGroup]="form" class="example-form">
+  <table class="example-full-width" cellspacing="0"><tr>  
+  <td><mat-form-field class="example-full-width">
+      <input matInput formControlName="nombre_est" name="nombre_est" [(ngModel)]="per.nombre_est" placeholder="Nombre de la Estacion">
+      <mat-error *ngIf="form.controls.nombre_est.hasError('required')">
+        Campo <strong>requerido</strong>
+      </mat-error>
+    </mat-form-field></td></tr></table>
+  
+  <table class="example-full-width" cellspacing="0"><tr>  
+    <td><mat-form-field class="example-full-width">
+            <input matInput formControlName="ubicacion" name="ubicacion" [(ngModel)]="per.ubicacion" placeholder="Ubicacion">
+            <mat-error *ngIf="form.controls.ubicacion.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+    </mat-form-field></td>
+    <td><mat-form-field class="example-full-width">
+          <input matInput formControlName="numero_playas" name="numero_playas" [(ngModel)]="per.numero_playas" placeholder="Numero de Playas">
+          <mat-error *ngIf="form.controls.numero_playas.hasError('required')">
+            Campo <strong>requerido</strong>
+          </mat-error>
+          </mat-form-field></td>
+    <td><mat-form-field class="example-full-width">
+            <input matInput formControlName="numero_disp" name="numero_disp" [(ngModel)]="per.numero_disp" placeholder="Numero de Dispensadores">
+            <mat-error *ngIf="form.controls.numero_disp.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field></td></tr></table>
+
+
+  <table class="example-full-width" cellspacing="0"><tr>      
+    <td><mat-form-field class="example-full-width">
+            <input matInput formControlName="numero_tanques" name="numero_tanques" [(ngModel)]="per.numero_tanques" placeholder="Numero de Tanques">
+            <mat-error *ngIf="form.controls.numero_tanques.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field></td>
+    <td><mat-form-field class="example-full-width">
+            <input matInput formControlName="telefono" name="telefono" [(ngModel)]="per.telefono" placeholder="Telefono">
+            <mat-error *ngIf="form.controls.telefono.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field></td>
+    
+   <td><select formControlName="encargado" name="encargado" id="" [(ngModel)]="per.encargado" >
+              <option *ngFor="let t of combolista" [value]="t._id">{{t.nombre}}</option>
+           </select></td></tr></table>
+           
+        
+
+        
+        
+  <table class="example-full-width" cellspacing="0"><tr>
+    <td><mat-form-field class="example-full-width">
+            <input matInput formControlName="cantidad_max" name="cantidad_max" [(ngModel)]="per.tanques.cantidad_max" placeholder="Cantidad Maxima">
+            <mat-error *ngIf="form.controls.cantidad_max.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field></td>
+    <td><mat-form-field class="example-full-width">
+            <input matInput type="text" formControlName="cantidad_min" name="cantidad_min" [(ngModel)]="per.tanques.cantidad_min" placeholder="Cantidad Minima">
+            <mat-error *ngIf="form.controls.cantidad_min.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field></td>    
+    <td><mat-form-field class="example-full-width">
+            <input matInput type="text" formControlName="cantidad_actual" name="cantidad_actual" [(ngModel)]="per.tanques.cantidad_actual" placeholder="Cantidad Actual">
+            <mat-error *ngIf="form.controls.cantidad_actual.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field></td>    
+    <td><mat-form-field class="example-full-width1">
+            <input matInput type="text" formControlName="tipo_tanque" name="tipo_tanque" [(ngModel)]="per.tanques.tipo_tanque" placeholder="Tipo de Combustible">
+            <mat-error *ngIf="form.controls.tipo_tanque.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field></td></tr></table>       
+         
+  
+  
+   
+      <button mat-raised-button   (click)="onNoClick()" > Cancelar</button>
+      <button mat-raised-button  (click)="enviar()"  > enviar</button>
+   
+  </form>

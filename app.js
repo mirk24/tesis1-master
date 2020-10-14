@@ -76,27 +76,14 @@ const guardarMonitoreo = function(info){
     infoArduino.push(info);
   }
   if(infoArduino.length==10){
-    // var infoPromedio = infoArduino.reduce((curr, next) => {
-    //   if(!curr.dato1){
-    //     curr.dato1 = next.dato1;
-    //   } else {
-    //     curr.dato1 = next.dato1;
-    //   }
-    
-    //   if(!curr.dato2){
-    //     curr.dato2 = next.dato2;
-    //   } else {
-    //     curr.dato2 = next.dato2;
-    //   }
-    //   return curr;
-    // }, {});
     var q = new monitoreo();
-    q.temp_actual=Math.round(infoArduino[infoArduino.length-1].dato2); 
-    q.lectura_actual=Math.round(infoArduino[infoArduino.length-1].dato1);
-    q.fecha=new Date(Date.now());
-    q.estado=1;
+    q.temp_actual = Math.round(infoArduino[infoArduino.length-1].dato2); 
+    q.lectura_actual = Math.round(infoArduino[infoArduino.length-1].dato1);
+    q.fecha = new Date(moment().format('dd/M/YYYY')); //Guardar fecha con formato usando moment
+    q.estado = 1;
+    //q.perdida = (q.temp_actual * q.lectura_actual) * 0.000056; //Poner formula real
     //q.save();
-    infoArduino= new Array();
+    infoArduino = new Array();
   }
  
 }
@@ -104,7 +91,6 @@ const guardarMonitoreo = function(info){
 
 io.sockets.on('connection', function (socket) {
   parser.on('data', function (data) {
-      //q=new monitoreo();
       console.log(data);
       if(data!=''){
          try{
@@ -112,27 +98,10 @@ io.sockets.on('connection', function (socket) {
         guardarMonitoreo(js);
        }
        catch{console.log('entro');}
-      } 
-      
-      
-      //let t=JSON.parse(data);
+      }
       socket.emit('data',data);
   });
-  /**socket.on('subscribe', function (data) {
-      socket.join(data.room);
-  });
-  socket.on('arriv', function (data) {
-      console.log(data);
-      io.sockets.in('invitor').emit('send message',data);
-  });
-
-  socket.on('unsubscribe', function (data) {
-      socket.leave(data.room);
-  });**/
 });
-
-  
-
 
 /**************** */
 

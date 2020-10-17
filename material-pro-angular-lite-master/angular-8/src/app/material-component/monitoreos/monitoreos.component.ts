@@ -5,6 +5,7 @@ import { MonitoreosService } from '../../services/monitoreos.service';
 import { FormulariomonitoreosComponent } from './formulariomonitoreos/formulariomonitoreos.component';
 import { Socket } from 'ngx-socket-io';
 import { MatSort, MatPaginator } from '@angular/material';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-monitoreos',
@@ -26,6 +27,8 @@ export class MonitoreosComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   fechasDisponibles = new Array();
   fechaActual = null;
+  dato_m = "";
+  fecha_hoy = new Date();
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -40,13 +43,9 @@ export class MonitoreosComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-  dato_m = "";
   getMessage() {
     return this.socket
       .fromEvent("dataSerial").subscribe((dataSerial: any) => {
-        console.log("sss");
-        //console.log(data);
-
         this.dato_m = dataSerial.value;
       });
   }
@@ -61,6 +60,10 @@ export class MonitoreosComponent implements OnInit {
       console.log(dato)
       if (dato.estado == 1) {
         this.lista = dato.lista;
+        this.lista = this.lista.map(function(item){
+          item.fecha = moment(item.fecha).format("DD/MM/YYYY");
+          return item;
+        });
         this.dataSource.data = this.lista;
 
         //Logica para obtener datos historicos

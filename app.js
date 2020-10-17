@@ -59,7 +59,8 @@ var io = require('socket.io')(server);
 app2.set('view engine', 'html');
 server.listen(process.env.PORT || 3800);  
 monitoreo=require("./modelos/monitoreo.model");
-const port= new Serialport('COM4', {
+
+const port= new Serialport('COM3', {
     baudRate: 2400
 });
 

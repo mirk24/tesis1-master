@@ -60,7 +60,7 @@ app2.set('view engine', 'html');
 server.listen(process.env.PORT || 3800);  
 monitoreo=require("./modelos/monitoreo.model");
 
-const port= new Serialport('COM3', {
+const port= new Serialport('COM4', {
     baudRate: 2400
 });
 
@@ -98,7 +98,7 @@ io.sockets.on('connection', function (socket) {
         js=JSON.parse(data);
         guardarMonitoreo(js);
        }
-       catch{console.log('entro');}
+       catch{}
       }
       socket.emit('data',data);
   });

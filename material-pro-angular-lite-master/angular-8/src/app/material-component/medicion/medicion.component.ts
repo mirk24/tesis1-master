@@ -95,7 +95,7 @@ export class MedicionComponent implements OnInit {
     if (info.dato1 < 420) {
       this.mostrarAlertaGasolinaBaja()
     }
-    if (info.dato2 > 18) {
+    if (info.dato2 > 25) {
       this.mostrarAlertaTemperaturaAlta();
     }
   }
@@ -110,14 +110,14 @@ export class MedicionComponent implements OnInit {
             label: 'Nivel de Combustible',
             backgroundColor: 'rgb(30, 136, 229)',
             borderColor: 'rgb(30, 136, 229)',
-
+            data:[500],
             fill: false,
           },
           {
             label: 'Temperatura',
             backgroundColor: 'rgb(230, 136, 229)',
             borderColor: 'rgb(230, 136, 229)',
-
+            //data:[1,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100],
             fill: false,
           },
         ]

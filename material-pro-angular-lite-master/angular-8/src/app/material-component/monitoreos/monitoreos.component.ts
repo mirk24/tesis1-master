@@ -5,6 +5,7 @@ import { MonitoreosService } from '../../services/monitoreos.service';
 import { FormulariomonitoreosComponent } from './formulariomonitoreos/formulariomonitoreos.component';
 import { Socket } from 'ngx-socket-io';
 import { MatSort, MatPaginator } from '@angular/material';
+import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 import * as moment from 'moment';
 
 @Component({
@@ -64,7 +65,7 @@ export class MonitoreosComponent implements OnInit {
           item.fecha = moment(item.fecha).format("DD/MM/YYYY");
           return item;
         });
-        this.dataSource.data = this.lista;
+        this.dataSource.data = this.calcularPerdidasSegunFecha(this.fecha_hoy);
 
         //Logica para obtener datos historicos
 
@@ -97,9 +98,11 @@ export class MonitoreosComponent implements OnInit {
     });
   }
 
-  calcularPerdidasSegunFecha(fecha) {
+  calcularPerdidasSegunFecha(evento) {
+    const fecha = moment(evento).format("DD/MM/YYYY"); 
     let datosFecha = this.lista.filter(function (item) {
-      return item.fecha === fecha;
+      console.log(fecha, item.fecha);
+      return item.fecha === fecha; 
     });
     let perdidas = datosFecha.reduce(function (curr, next) {
       curr += parseFloat(next.lectura_actual);
@@ -108,9 +111,8 @@ export class MonitoreosComponent implements OnInit {
 
     console.log(datosFecha, perdidas);
 
-    //this.datasource.data = datosFecha // para una nueva tabla
-
-    return [datosFecha, perdidas];
+    this.dataSource.data = datosFecha // para una nueva tabla
+    
   }
 
 }

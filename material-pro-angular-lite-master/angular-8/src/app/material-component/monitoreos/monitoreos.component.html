@@ -1,17 +1,17 @@
 <mat-card-title>Registro de Monitoreo</mat-card-title>
 <h4>Lista de Datos</h4>
+<mat-form-field appearance="fill">
+  <mat-label>Choose a date</mat-label>
+  <input matInput [matDatepicker]="picker" (dateChange)="calcularPerdidasSegunFecha($event.value)" [(ngModel)]="fecha_hoy">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
 <mat-form-field>
   <mat-label>Filtro</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
 </mat-form-field>
 
-<mat-form-field appearance="fill">
-  <mat-label>Choose a date</mat-label>
-  <input matInput [matDatepicker]="picker" [(ngModel)]="fecha_hoy">
-  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-  <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
-<button mat-raised-button color="primary">Primary</button>
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
@@ -41,9 +41,3 @@
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 50,  100]"></mat-paginator>
 </div>
-
-{{fecha_test}}
-
-<!-- <li *ngFor="let fecha of fechasDisponibles" (click)="calcularPerdidasSegunFecha(fecha)">
- {{fecha}}
-</li> -->

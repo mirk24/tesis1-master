@@ -5,6 +5,7 @@ var esquema = new Schema({
     temp_actual: String,
     lectura_actual: String,
     fecha: Date,
+    perdida: Number,
     estado: Number
 },
     {

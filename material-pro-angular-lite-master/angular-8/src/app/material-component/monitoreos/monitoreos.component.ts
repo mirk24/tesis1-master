@@ -23,13 +23,14 @@ export class MonitoreosComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  displayedColumns: string[] = ['temp_actual', 'lectura_actual', 'fecha'];
+  displayedColumns: string[] = ['temp_actual', 'lectura_actual', 'fecha', 'perdida'];
   lista = [];
   dataSource = new MatTableDataSource<any>();
   fechasDisponibles = new Array();
   fechaActual = null;
   dato_m = "";
   fecha_hoy = new Date();
+  perdida_dia = 0;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -62,19 +63,11 @@ export class MonitoreosComponent implements OnInit {
       if (dato.estado == 1) {
         this.lista = dato.lista;
         this.lista = this.lista.map(function(item){
+          item.fecha_hora = moment(item.fecha).format("HH:mm");
           item.fecha = moment(item.fecha).format("DD/MM/YYYY");
           return item;
         });
-        this.dataSource.data = this.calcularPerdidasSegunFecha(this.fecha_hoy);
-
-        //Logica para obtener datos historicos
-
-        this.fechasDisponibles = dato.lista.reduce(function (current, next) {
-          if (current.indexOf(next.fecha) === -1) {
-            current.push(next.fecha);
-          }
-          return current;
-        }, []);
+        this.calcularPerdidasSegunFecha(this.fecha_hoy);
       } else {
         this.lista = this.dataSource.data = [];
       }
@@ -85,7 +78,7 @@ export class MonitoreosComponent implements OnInit {
   open() {
     const dialogRef = this.dialog.open(FormulariomonitoreosComponent, {
       width: '750px',
-      data: { temp_actual: '', lectura_actual: '', fecha: '' }
+      data: { temp_actual: '', lectura_actual: '', fecha: '', perdida: '' }
 
     });
 
@@ -105,13 +98,14 @@ export class MonitoreosComponent implements OnInit {
       return item.fecha === fecha; 
     });
     let perdidas = datosFecha.reduce(function (curr, next) {
-      curr += parseFloat(next.lectura_actual);
+      curr += parseFloat(next.perdida);
       return curr;
     }, 0);
 
     console.log(datosFecha, perdidas);
 
-    this.dataSource.data = datosFecha // para una nueva tabla
+    this.dataSource.data = datosFecha;
+    this.perdida_dia = perdidas;
     
   }
 

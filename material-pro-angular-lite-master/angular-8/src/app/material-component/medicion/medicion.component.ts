@@ -46,10 +46,11 @@ export class MedicionComponent implements OnInit {
       .fromEvent("data").subscribe((data: any) => {
         this.dato_m = data.value;
         try {
-          let t = JSON.parse(data);
+          
           //Incremento del contador a medida que llega informacion
           //Cada 30 intervalos son 6 segundos en promedio
           this.contador = this.contador + 1;
+          let t = JSON.parse(data);
           if (this.contador % 10 == 0) {
             this.chart.data.datasets[0].data.push(t.dato1);
           }
@@ -110,7 +111,7 @@ export class MedicionComponent implements OnInit {
             label: 'Nivel de Combustible',
             backgroundColor: 'rgb(30, 136, 229)',
             borderColor: 'rgb(30, 136, 229)',
-            data:[500],
+            data:[0],
             fill: false,
           },
           {

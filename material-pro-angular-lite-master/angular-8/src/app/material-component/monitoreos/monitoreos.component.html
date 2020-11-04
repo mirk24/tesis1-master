@@ -1,7 +1,7 @@
 <mat-card-title>Registro de Monitoreo</mat-card-title>
 <h4>Lista de Datos</h4>
 <mat-form-field appearance="fill">
-  <mat-label>Choose a date</mat-label>
+  <mat-label>Seleccione una Fecha</mat-label>
   <input matInput [matDatepicker]="picker" (dateChange)="calcularPerdidasSegunFecha($event.value)" [(ngModel)]="fecha_hoy">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
@@ -17,11 +17,11 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
     <ng-container matColumnDef="temp_actual">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Temperatura Del Tanque </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Temperatura Del Tanque en °C </th>
       <td mat-cell *matCellDef="let element">{{element.temp_actual}}</td>
     </ng-container>
     <ng-container matColumnDef="lectura_actual">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nivel de Combustible en el Tanque </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Nivel de Combustible en el Tanque en Litros </th>
       <td mat-cell *matCellDef="let element">{{element.lectura_actual}}</td>
     </ng-container>
     <ng-container matColumnDef="fecha">
@@ -29,7 +29,7 @@
       <td mat-cell *matCellDef="let element">{{element.fecha_hora}}</td>
     </ng-container>
     <ng-container matColumnDef="perdida">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Merma por Temperatura </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Merma Perdida en Litros </th>
       <td mat-cell *matCellDef="let element">{{element.perdida}}</td>
     </ng-container>
 
@@ -44,5 +44,6 @@
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 50,  100]"></mat-paginator>
-  <h1>{{perdida_dia}}</h1>
+  <mat-label>Aproximado de merma producido por la temperatura en el dia: {{perdida_dia}} Litros </mat-label>
+  <!--<h1>Merma aproximada del dia por la temperatura{{perdida_dia}}</h1>-->
 </div>

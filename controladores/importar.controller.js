@@ -1,4 +1,5 @@
 var Importar=require('../modelos/importar.model');
+//import * as moment from 'moment';
 var moment = require('moment');
 function listaImportar(req, res){
     Importar.find({estado:1},(err,resul)=>{
@@ -56,7 +57,8 @@ function nuevoImportar(req, res){
            }catch(e){console.log(e);}
             let est= new Importar();
              //let yy=                
-                est.fecha=new Date(Date.now());
+                //est.fecha=new Date(Date.now());
+                est.fecha=items[2];
                     //tt.format('YYYY-MM-DD[T00:00:00.000Z]')).toISOString();
                 //new Date(Date.now()).toISOString();
                 //tt.format('YYYY-MM-DD[T00:00:00.000Z]').toString();//fe;//.toISOString(),
@@ -64,6 +66,7 @@ function nuevoImportar(req, res){
                 est.precio=Number(items[6].split(" ")[0]);
                 est.totalventa=Number(items[10].split(" ")[0]);
                 est.vendedor=items[18];
+                est.estado=1;
             //}            );
             //console.log(error = cat.validateSync());
              est.save( (err,nuevo)=>{

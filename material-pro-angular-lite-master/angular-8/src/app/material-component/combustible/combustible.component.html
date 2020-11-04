@@ -1,54 +1,48 @@
-<mat-card>
-    <mat-card-content>    
-    <mat-card-title>Gestion de Abastecimiento de Combustible</mat-card-title>
-    <h4>Administra las Compras de Combustible</h4>
-        <code class="bg-light"></code>
+<mat-card-title>Registro de Compras de Combustible</mat-card-title>
+<h4>Lista de Compras</h4>
+<button mat-raised-button (click)="open()" color="primary">Nueva Compra</button>
+<mat-form-field>
+  <mat-label>Filtro</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="ingrese palabra clave para realizar una busqueda" #input>
+</mat-form-field>
 
-        <button mat-mini-fab (click)="open()" color="primary">+</button>
-    <mat-table [dataSource]="dataSource" > 
-       
-          <ng-container matColumnDef="litros_comprados">
-            <th mat-header-cell *matHeaderCellDef>Litros Comprados</th>
-            <td mat-cell *matCellDef="let element">{{element.litros_comprados}}</td>
-          </ng-container>
 
-          <ng-container matColumnDef="fecha_adquirida">
-              <th mat-header-cell *matHeaderCellDef> Fecha de Compra </th>
-              <td mat-cell *matCellDef="let element">{{element.fecha_adquirida}}</td>
-            </ng-container>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
 
-          <ng-container matColumnDef="tipo_de_combustible">
-                <th mat-header-cell *matHeaderCellDef>Tipo de Combustible</th>
-                <td mat-cell *matCellDef="let element">{{element.tipo_de_combustible}}</td>
-              </ng-container>
-          <ng-container matColumnDef="chofer">
-                <th mat-header-cell *matHeaderCellDef>Nombre del Conductor </th>
-                <td mat-cell *matCellDef="let element">{{element.chofer}}</td>
-              </ng-container>
-          <ng-container matColumnDef="placa_sisterna">
-                <th mat-header-cell *matHeaderCellDef>Placa de la Sisterna</th>
-                <td mat-cell *matCellDef="let element">{{element.placa_sisterna}}</td>
-              </ng-container>
-         
-          <ng-container matColumnDef="borrar">
-            <th mat-header-cell *matHeaderCellDef> borrar </th>
-            <td mat-cell *matCellDef="let element"> 
-                <button mat-fab (click)="onBorrar(element)" aria-label="Example icon-button with a heart icon">
-                <mat-icon  >delete</mat-icon>
-                </button>
-              </td>
-          </ng-container>
-          <ng-container matColumnDef="editar">
-            <th mat-header-cell *matHeaderCellDef> Editar </th>
-            <td mat-cell *matCellDef="let element"> 
-                <button mat-fab (click)="onEditar(element)" aria-label="Example icon-button with a heart icon">
-                <mat-icon>edit</mat-icon>
-                </button>
-              </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </mat-table>        
-    </mat-card-content>
-</mat-card>
+    <ng-container matColumnDef="litros_comprados">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Litros Comprados</th>
+      <td mat-cell *matCellDef="let element">{{element.litros_comprados}}</td>
+    </ng-container>
 
+    <ng-container matColumnDef="fecha_adquirida">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Compra </th>
+      <td mat-cell *matCellDef="let element">{{element.fecha_adquirida}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="tipo_de_combustible">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo de Combustible</th>
+      <td mat-cell *matCellDef="let element">{{element.tipo_de_combustible}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="chofer">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre del Conductor </th>
+      <td mat-cell *matCellDef="let element">{{element.chofer}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="placa_sisterna">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Placa de la Sisterna</th>
+      <td mat-cell *matCellDef="let element">{{element.placa_sisterna}}</td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 50,  100]"></mat-paginator>
+</div>

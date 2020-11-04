@@ -105,7 +105,7 @@ export class MonitoreosComponent implements OnInit {
     console.log(datosFecha, perdidas);
 
     this.dataSource.data = datosFecha;
-    this.perdida_dia = perdidas;
+    this.perdida_dia =perdidas;
     
   }
 

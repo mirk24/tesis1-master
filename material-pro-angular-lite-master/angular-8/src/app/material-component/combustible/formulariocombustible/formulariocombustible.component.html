@@ -1,55 +1,64 @@
 <form [formGroup]="form" class="example-form">
-    <table class="example-full-width" cellspacing="0"><tr>
+  <table class="example-full-width" cellspacing="0">
+    <tr>
 
-    <td><mat-form-field class="example-full-width1">
-      <input matInput formControlName="litros_comprados" name="litros_comprados" [(ngModel)]="per.litros_comprados" placeholder="Litros Comprados">
-    </mat-form-field></td>
+      <td>
+        <mat-form-field class="example-full-width1">
+          <input matInput formControlName="litros_comprados" name="litros_comprados" [(ngModel)]="per.litros_comprados"
+            placeholder="Litros Comprados">
+            <mat-error *ngIf="form.controls.litros_comprados.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field>
+      </td>
 
-    <div *ngIf="form.controls.litros_comprados.errors"  style="color:red">
-        <div *ngIf="form.controls.litros_comprados.errors.required">Este campo es obligatorio</div>
-        <div *ngIf="form.controls.litros_comprados.errors.maxlength">El tamano es muy grande</div>
-    </div>
+      <td>
+        <mat-form-field appearance="fill">
+          <input matInput [matDatepicker]="picker" formControlName="fecha_adquirida" name="fecha_adquirida" [(ngModel)]="per.fecha_adquirida"
+            placeholder="Fecha de Compra">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
 
-   <td><mat-form-field class="example-full-width2">
-            <input matInput formControlName="fecha_adquirida" name="fecha_adquirida" [(ngModel)]="per.fecha_adquirida" placeholder="Fecha de Compra">
-          </mat-form-field></td>
+            <mat-error *ngIf="form.controls.fecha_adquirida.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field>
+      </td>
 
-          <div *ngIf="form.controls.fecha_adquirida.errors"  style="color:red">
-              <div *ngIf="form.controls.fecha_adquirida.errors.required">Este campo es obligatorio</div>
-              <div *ngIf="form.controls.fecha_adquirida.errors.maxlength">El tamano es muy grande</div>
-          </div>
-        
-    <td><mat-form-field class="example-full-width3">
-          <input matInput formControlName="tipo_de_combustible" name="tipo_de_combustible" [(ngModel)]="per.tipo_de_combustible" placeholder="Tipo de Combustible">
-          </mat-form-field></td>
-
-        <div *ngIf="form.controls.tipo_de_combustible.errors"  style="color:red">
-            <div *ngIf="form.controls.tipo_de_combustible.errors.required">Este campo es obligatorio</div>
-            <div *ngIf="form.controls.tipo_de_combustible.errors.maxlength">El tamano es muy grande</div>
-        </div></tr></table> 
+      <td>
+        <mat-form-field class="example-full-width3">
+          <input matInput formControlName="tipo_de_combustible" name="tipo_de_combustible"
+            [(ngModel)]="per.tipo_de_combustible" placeholder="Tipo de Combustible">
+            <mat-error *ngIf="form.controls.tipo_de_combustible.hasError('required')">
+              Campo <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
 
 
-        <td><mat-form-field class="example-full-width4">
-            <input matInput formControlName="chofer" name="chofer" [(ngModel)]="per.chofer" placeholder="Nombre del Conductor">
-          </mat-form-field>
+  <td>
+    <mat-form-field class="example-full-width4">
+      <input matInput formControlName="chofer" name="chofer" [(ngModel)]="per.chofer"
+        placeholder="Nombre del Conductor">
+        <mat-error *ngIf="form.controls.chofer.hasError('required')">
+          Campo <strong>requerido</strong>
+        </mat-error>
+    </mat-form-field>
 
-          <div *ngIf="form.controls.chofer.errors"  style="color:red">
-            <div *ngIf="form.controls.chofer.errors.required">Este campo es obligatorio</div>
-            <div *ngIf="form.controls.chofer.errors.maxlength">El tamano es muy grande</div>
-        </div>
-        
     <mat-form-field class="example-full-width5">
-            <input matInput formControlName="placa_sisterna" name="placa_sisterna" [(ngModel)]="per.placa_sisterna" placeholder="Placa de la Sisterna">
-          </mat-form-field>
+      <input matInput formControlName="placa_sisterna" name="placa_sisterna" [(ngModel)]="per.placa_sisterna"
+        placeholder="Placa de la Sisterna">
+        <mat-error *ngIf="form.controls.chofer.hasError('required')">
+          Campo <strong>requerido</strong>
+        </mat-error>
+    </mat-form-field>
 
-          <div *ngIf="form.controls.placa_sisterna.errors"  style="color:red">
-              <div *ngIf="form.controls.placa_sisterna.errors.required">Este campo es obligatorio</div>
-              <div *ngIf="form.controls.placa_sisterna.errors.maxlength">El tamano es muy grande</div>
-          </div>
-   
-  
-    
-      <button mat-raised-button   (click)="onNoClick()" > Cancelar</button>
-      <button mat-raised-button  (click)="enviar()"  > enviar</button>
-   
-  </form>
+
+
+
+    <button mat-raised-button (click)="onNoClick()"> Cancelar</button>
+    <button mat-raised-button (click)="enviar()"> enviar</button>
+
+</form>

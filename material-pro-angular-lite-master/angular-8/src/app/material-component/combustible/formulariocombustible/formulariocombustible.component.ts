@@ -16,7 +16,7 @@ export class FormulariocombustibleComponent implements OnInit {
 
   error=[];
   form = this.fb.group({
-    litros_comprados: ['',[Validators.required,Validators.maxLength(10)]],
+    litros_comprados: ['',[Validators.required]],
     fecha_adquirida: ['',[Validators.required,Validators.maxLength(10)]],
     tipo_de_combustible: ['',[Validators.required,Validators.maxLength(10)]],
     chofer: ['',[Validators.required,Validators.maxLength(10)]],

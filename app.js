@@ -74,12 +74,13 @@ parser.on('open', function () {
 var infoArduino = new Array();
 
 const guardarMonitoreo = function (info) {
-  if (infoArduino.length < 10) {
+  if (infoArduino.length < 20) {
     infoArduino.push(info);
   }
-  if (infoArduino.length == 10) {
+  if (infoArduino.length == 20) {
     var q = new monitoreo();
     var calc = 0;
+    var total = 0;
     try {
       q.temp_actual = Math.round(infoArduino[infoArduino.length - 1].dato2);
       q.lectura_actual = Math.round(infoArduino[infoArduino.length - 1].dato1);
@@ -88,7 +89,8 @@ const guardarMonitoreo = function (info) {
       if (q.temp_actual >= 18 && q.temp_actual <= 30) {
         calc = (0.99475 * q.lectura_actual);
       }
-      q.perdida = (q.lectura_actual - calc);
+      total = q.lectura_actual - calc;
+      q.perdida = Math.round(total);
       //q.save();
     } catch (Error) { console.log(Error.message) };
     infoArduino = new Array();

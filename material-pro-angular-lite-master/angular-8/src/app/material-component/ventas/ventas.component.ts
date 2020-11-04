@@ -8,12 +8,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';  
 import { catchError, map } from 'rxjs/operators'; 
+import { data } from 'jquery';
 
 @Component({
   selector: 'app-ventas',
   templateUrl: './ventas.component.html',
   styleUrls: ['./ventas.component.css']
 })
+
 export class VentasComponent implements OnInit {
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;files  = [];  
 
@@ -21,7 +23,7 @@ export class VentasComponent implements OnInit {
       public dialog: MatDialog) { 
   
     }
-    displayedColumns: string[] = ['fecha','volumen','precio','totalventa','vendedor','borrar','importar'];
+    displayedColumns: string[] = ['fecha','volumen','precio','totalventa','vendedor'];
     lista=[];
     dataSource = new MatTableDataSource<any>();
     ngOnInit() {
@@ -31,12 +33,15 @@ export class VentasComponent implements OnInit {
           
           this.lista=dato.lista;
           this.dataSource.data=this.lista;
-          console.log("pppppp");
+          console.log('aaa');
         }else{
           this.lista=this.dataSource.data=[];
   
         }
       })
+    }
+    getTotalCost() {
+      return this.lista.map(t => t.totalventa).reduce((acc, value) => acc + value, 0);
     }
     uploadFile(file) {
       const formData = new FormData();  
@@ -78,31 +83,6 @@ export class VentasComponent implements OnInit {
           this.uploadFile(file);  
         });  
     }
-    onBorrar(item){
-  
       
-   //     const dialogRef = this.dialog.open(ConfirmarComponent, {
-    //      width: '250px',
-    //      data: ''
-    //    });
-    
-    /*     dialogRef.afterClosed().subscribe(result => {
-          if(result=='ok'){
-            this.db.delete(item._id).subscribe((dato:any)=>{
-          if(dato.estado==1){
-  
-            this.lista.splice(this.lista.indexOf(item),1);
-            this.dataSource.data=this.lista;
-          }else{
-  
-          }
-        });
-          }
-        });*/
-    }
-    
-      
-  
-  
   }
   

@@ -2,11 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var esquema = new Schema({
-    fecha:  Date,
+    fecha:  String,
     volumen: Number,
     precio:   Number,
     totalventa: Number,
     vendedor: String,
+    estado: Number
 
 },{
     collection:'importar'

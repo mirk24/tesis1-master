@@ -2,6 +2,18 @@
     <mat-card-content>
         <mat-card-title>Ventas de la Estacion</mat-card-title>
         <h4>Gestion de Ventas de la Estacion</h4>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccione una Fecha</mat-label>
+            <input matInput [matDatepicker]="picker" (dateChange)="calcularPerdidasSegunFecha($event.value)" [(ngModel)]="fecha_hoy">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Filtro</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+          </mat-form-field>
         <code class="bg-light"></code>
 
         <div>
@@ -27,28 +39,28 @@
      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
         <ng-container matColumnDef="fecha">
-          <th mat-header-cell *matHeaderCellDef> Fecha y hora de Venta </th>
+          <th mat-header-cell *matHeaderCellDef><strong>Fecha y hora de Venta</strong></th>
           <td mat-cell *matCellDef="let element">{{element.fecha}}</td>
           <td mat-footer-cell *matFooterCellDef> Total </td>
         </ng-container>
 
         <ng-container matColumnDef="volumen">
-            <th mat-header-cell *matHeaderCellDef> Litros Vendidos </th>
+            <th mat-header-cell *matHeaderCellDef><strong>Litros Vendidos </strong> </th>
             <td mat-cell *matCellDef="let element">{{element.volumen}}</td>
         </ng-container>
 
         <ng-container matColumnDef="precio">
-            <th mat-header-cell *matHeaderCellDef> Precio por Litro </th>
+            <th mat-header-cell *matHeaderCellDef><strong>Precio por Litro</strong>  </th>
             <td mat-cell *matCellDef="let element">{{element.precio}}</td>
         </ng-container>
 
         <ng-container matColumnDef="totalventa">
-            <th mat-header-cell *matHeaderCellDef> Total </th>
+            <th mat-header-cell *matHeaderCellDef><strong>Total </strong> </th>
             <td mat-cell *matCellDef="let element">{{element.totalventa}}</td>
         </ng-container>
 
         <ng-container matColumnDef="vendedor">
-            <th mat-header-cell *matHeaderCellDef> Nombre del Vendedor </th>
+            <th mat-header-cell *matHeaderCellDef><strong>Nombre del Vendedor</strong>  </th>
             <td mat-cell *matCellDef="let element">{{element.vendedor}}</td>
             <td mat-footer-cell *matFooterCellDef>{{getTotalCost() | currency}}</td>
         </ng-container>
@@ -56,7 +68,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
       </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 50,  100]"></mat-paginator>
       <!--<tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>-->
+      <mat-label>Aproximado de merma producido por la temperatura en el dia: {{totaldia}} Litros </mat-label>
       <h4>{{getTotalCost()}}</h4>
 </mat-card>

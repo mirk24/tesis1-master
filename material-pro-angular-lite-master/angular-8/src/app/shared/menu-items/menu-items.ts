@@ -12,8 +12,8 @@ const MENUITEMS = [
    { state: 'persona', type: 'link', name: 'Usuarios', icon: 'account_circle' },
    { state: 'estacion', type: 'link', name: 'Estaciones', icon: 'local_gas_station' },
    { state: 'monitoreos', type: 'link', name: 'Lecturas de los Tanques', icon: 'my_location' },
-   { state: 'ventas', type: 'link', name: 'Ventas', icon: 'router' },
-   { state: 'combustible', type: 'link', name: 'Combustible', icon: 'router' },
+   { state: 'ventas', type: 'link', name: 'Ventas de la Estacion', icon: 'monetization_on' },
+   { state: 'combustible', type: 'link', name: 'Compras de Combustible', icon: 'attach_money' },
 
    { state: 'medicion', type: 'link', name: 'Nivel en Tiempo Real', icon: 'router' },
   // { state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5' },

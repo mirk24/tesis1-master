@@ -2,13 +2,12 @@ import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { VentasService } from '../../services/ventas.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-
-
-
+import { MatSort, MatPaginator } from '@angular/material';
 import { HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';  
 import { catchError, map } from 'rxjs/operators'; 
 import { data } from 'jquery';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-ventas',
@@ -23,17 +22,37 @@ export class VentasComponent implements OnInit {
       public dialog: MatDialog) { 
   
     }
+    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: false }) sort: MatSort;
     displayedColumns: string[] = ['fecha','volumen','precio','totalventa','vendedor'];
     lista=[];
     dataSource = new MatTableDataSource<any>();
+    totaldia = 0;
+    fecha_hoy = new Date();
+    ngAfterViewInit() {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
+  
+    applyFilter(event: Event) {
+      const filterValue = (event.target as HTMLInputElement).value;
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+  
+      if (this.dataSource.paginator) {
+        this.dataSource.paginator.firstPage();
+      }
+    }
     ngOnInit() {
       this.db.list().subscribe((dato:any)=>{
         console.log("pppppp");
         if(dato.estado==1){
-          
           this.lista=dato.lista;
           this.dataSource.data=this.lista;
-          console.log('aaa');
+          this.lista = this.lista.map(function(item){
+            item.fecha = moment(item.fecha).format("DD/MM/YYYY");
+            return item;
+          });
+          
         }else{
           this.lista=this.dataSource.data=[];
   
@@ -82,6 +101,24 @@ export class VentasComponent implements OnInit {
         this.files.forEach(file => {  
           this.uploadFile(file);  
         });  
+    }
+
+    calcularPerdidasSegunFecha(evento) {
+      const fecha = moment(evento).format("DD/MM/YYYY"); 
+      let datosFecha = this.lista.filter(function (item) {
+        console.log(fecha, item.fecha);
+        return item.fecha === fecha; 
+      });
+      let totales = datosFecha.reduce(function (curr, next) {
+        curr += parseFloat(next.totalventa);
+        return curr;
+      }, 0);
+  
+      console.log(datosFecha, totales);
+  
+      this.dataSource.data = datosFecha;
+      this.totaldia = totales;
+      
     }
       
   }

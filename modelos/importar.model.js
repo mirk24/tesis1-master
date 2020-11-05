@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var esquema = new Schema({
-    fecha:  String,
+    fecha:  Date,
     volumen: Number,
     precio:   Number,
     totalventa: Number,

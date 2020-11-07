@@ -1,7 +1,9 @@
-import { Component, AfterViewInit } from '@angular/core';
-
+import { Component, AfterViewInit, OnInit, Input } from '@angular/core';
 import * as Chartist from 'chartist';
 import { ChartType, ChartEvent } from 'ng-chartist';
+import { MonitoreosService } from '../services/monitoreos.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { VentasService } from '../services/ventas.service';
 declare var require: any;
 
 const data: any = require('./data.json');
@@ -20,8 +22,31 @@ export interface Chart {
 	styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements AfterViewInit {
+	lista= [];
+	constructor(
+		private db: MonitoreosService,
+		private db1: VentasService) { }
+	dataSource = new MatTableDataSource<any>();
 	ngAfterViewInit() {}
 
+	cargarDatosTabla() {
+		this.db.list().subscribe((dato: any) => {
+		  console.log(dato)
+		  if (dato.estado == 1) {
+			this.lista = dato.lista;
+			this.dataSource.data=this.lista;
+			console.log('pppppp');
+			}
+		   else {
+			this.lista = this.dataSource.data = [];
+		  }
+		})
+	
+	  }
+
+	  ngOnInit() {
+		this.cargarDatosTabla();
+	  }
 	// Barchart
 	barChart1: Chart = {
 		type: 'Bar',

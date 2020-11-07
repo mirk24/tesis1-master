@@ -30,7 +30,9 @@ export class MonitoreosComponent implements OnInit {
   fechaActual = null;
   dato_m = "";
   fecha_hoy = new Date();
+  fecha_hoy1 = new Date();
   perdida_dia = 0;
+  consumo_dia = 0;
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -67,7 +69,8 @@ export class MonitoreosComponent implements OnInit {
           item.fecha = moment(item.fecha).format("DD/MM/YYYY");
           return item;
         });
-        this.calcularPerdidasSegunFecha(this.fecha_hoy);
+        this.calcularCombustibleSegunFecha(this.fecha_hoy);
+        this.calcularPerdidasSegunFecha(this.fecha_hoy1);
       } else {
         this.lista = this.dataSource.data = [];
       }
@@ -93,19 +96,49 @@ export class MonitoreosComponent implements OnInit {
 
   calcularPerdidasSegunFecha(evento) {
     const fecha = moment(evento).format("DD/MM/YYYY"); 
+    var rest = 0;
+    var suma = 0;
     let datosFecha = this.lista.filter(function (item) {
       console.log(fecha, item.fecha);
       return item.fecha === fecha; 
     });
     let perdidas = datosFecha.reduce(function (curr, next) {
+      rest = curr;
+      suma ++;
       curr += parseFloat(next.perdida);
+      console.log(curr);
       return curr;
     }, 0);
-
     console.log(datosFecha, perdidas);
-
     this.dataSource.data = datosFecha;
     this.perdida_dia =perdidas;
+    
+  }
+
+  calcularCombustibleSegunFecha(evento1) {
+    const fecha = moment(evento1).format("DD/MM/YYYY");
+    var rest = 0; 
+    var resta = 0;
+    var resultado = 0;
+    var suma = 0;
+    let datosFecha = this.lista.filter(function (item) {
+      return item.fecha === fecha; 
+    });
+    let consumo = datosFecha.reduce(function (curr1, next) {
+      rest = parseFloat(next.lectura_actual);
+      if(rest < resta){
+        resultado = resta - rest;
+        suma += resultado;
+        console.log(suma);
+      }
+      resta = rest;
+      return suma;
+    }, 0);
+
+    // console.log(datosFecha, consumo);
+
+     this.dataSource.data = datosFecha;
+     this.consumo_dia =consumo;
     
   }
 

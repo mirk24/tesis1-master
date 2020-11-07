@@ -1,8 +1,15 @@
 <mat-card-title>Registro de Monitoreo</mat-card-title>
 <h4>Lista de Datos</h4>
 <mat-form-field appearance="fill">
-  <mat-label>Seleccione una Fecha</mat-label>
-  <input matInput [matDatepicker]="picker" (dateChange)="calcularPerdidasSegunFecha($event.value)" [(ngModel)]="fecha_hoy">
+  <mat-label><strong>Seleccione una Fecha para ver el combustible consumido del dia</strong></mat-label>
+  <input matInput [matDatepicker]="picker1" (dateChange)="calcularCombustibleSegunFecha($event.value)" [(ngModel)]="fecha_hoy">
+  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+  <mat-datepicker #picker1></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field appearance="fill">
+  <mat-label><strong>Seleccione una Fecha para ver la merma del dia</strong></mat-label>
+  <input matInput [matDatepicker]="picker" (dateChange)="calcularPerdidasSegunFecha($event.value)" [(ngModel)]="fecha_hoy1">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
@@ -44,5 +51,6 @@
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 50,  100]"></mat-paginator>
-  <mat-label>Aproximado de merma producido por la temperatura en el dia: {{perdida_dia}} Litros </mat-label>
+  <td><mat-label>Aproximado de merma producido por la temperatura en el dia: {{perdida_dia}} Litros </mat-label></td>
+  <mat-label>El aproximado de combustible consumido en el dia es: {{consumo_dia}} Litros </mat-label>
 </div>

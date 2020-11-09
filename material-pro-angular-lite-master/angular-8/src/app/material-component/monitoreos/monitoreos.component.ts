@@ -69,8 +69,8 @@ export class MonitoreosComponent implements OnInit {
           item.fecha = moment(item.fecha).format("DD/MM/YYYY");
           return item;
         });
-        this.calcularCombustibleSegunFecha(this.fecha_hoy);
-        this.calcularPerdidasSegunFecha(this.fecha_hoy1);
+        this.calcularCombustibleSegunFecha();
+        this.calcularPerdidasSegunFecha();
       } else {
         this.lista = this.dataSource.data = [];
       }
@@ -94,8 +94,8 @@ export class MonitoreosComponent implements OnInit {
     });
   }
 
-  calcularPerdidasSegunFecha(evento) {
-    const fecha = moment(evento).format("DD/MM/YYYY"); 
+  calcularPerdidasSegunFecha() {
+    const fecha = moment(this.fecha_hoy1).format("DD/MM/YYYY"); 
     var rest = 0;
     var suma = 0;
     let datosFecha = this.lista.filter(function (item) {
@@ -115,8 +115,8 @@ export class MonitoreosComponent implements OnInit {
     
   }
 
-  calcularCombustibleSegunFecha(evento1) {
-    const fecha = moment(evento1).format("DD/MM/YYYY");
+  calcularCombustibleSegunFecha() {
+    const fecha = moment(this.fecha_hoy).format("DD/MM/YYYY");
     var rest = 0; 
     var resta = 0;
     var resultado = 0;

@@ -2,41 +2,54 @@
 <!-- Simple four boxes Row -->
 <!-- ============================================================== -->
 <div fxLayout="row wrap">
-    <!-- column -->    
+    <!-- column -->
+    <mat-form-field appearance="fill">
+        <mat-label><strong>Seleccione una Fecha para ver el combustible consumido del dia</strong></mat-label>
+        <input matInput [matDatepicker]="picker1" (dateChange)="obtenerUltimosCincoDias()" [(ngModel)]="fecha_hoy">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
     <div fxFlex.gt-lg="66" fxFlex.gt-md="66" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
+
             <mat-card-content>
                 <div class="d-flex flex-wrap">
                     <div>
                         <mat-card-title>Sales Overview</mat-card-title>
-                         <mat-card-subtitle>Ample Admin Vs Material Admin</mat-card-subtitle> 
-                     </div>
+                        <mat-card-subtitle>Ample Admin Vs Material Admin</mat-card-subtitle>
+                    </div>
                     <div class="ml-auto">
                         <ul class="list-inline">
                             <li>
-                                <h6 class="text-success m-0"><i class="mdi mdi-checkbox-blank-circle font-10 m-r-10 "></i>Ample</h6> </li>
+                                <h6 class="text-success m-0"><i
+                                        class="mdi mdi-checkbox-blank-circle font-10 m-r-10 "></i>Ample</h6>
+                            </li>
                             <li>
-                                <h6 class=" text-info m-0"><i class="mdi mdi-checkbox-blank-circle font-10 m-r-10"></i>Pixel</h6> </li>
+                                <h6 class=" text-info m-0"><i
+                                        class="mdi mdi-checkbox-blank-circle font-10 m-r-10"></i>Pixel</h6>
+                            </li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="barchrt" style="height:360px;">
-                    <x-chartist class="" [data]="barChart1.data" [type]="barChart1.type" [options]="barChart1.options" [responsiveOptions]="barChart1.responsiveOptions"
-                        [events]="barChart1.events"> </x-chartist>
+                    <x-chartist class="" [data]="barChart1.data" [type]="barChart1.type" [options]="barChart1.options"
+                        [responsiveOptions]="barChart1.responsiveOptions" [events]="barChart1.events"> </x-chartist>
                 </div>
             </mat-card-content>
         </mat-card>
     </div>
-    <!-- column -->    
-    <!-- column -->    
-    <div fxFlex.gt-lg="33" fxFlex.gt-md="33"  fxFlex.gt-xs="100" fxFlex="100">
+    <!-- column -->
+    <!-- column -->
+    <div fxFlex.gt-lg="33" fxFlex.gt-md="33" fxFlex.gt-xs="100" fxFlex="100">
         <mat-card>
             <mat-card-content>
                 <mat-card-title>Our Visitors</mat-card-title>
                 <mat-card-subtitle>Different Devices Used to Visit</mat-card-subtitle>
                 <div class="piechart">
-                    <x-chartist class="" [data]="donuteChart1.data" [type]="donuteChart1.type" [options]="donuteChart1.options" [responsiveOptions]="donuteChart1.responsiveOptions"
+                    <x-chartist class="" [data]="donuteChart1.data" [type]="donuteChart1.type"
+                        [options]="donuteChart1.options" [responsiveOptions]="donuteChart1.responsiveOptions"
                         [events]="donuteChart1.events"> </x-chartist>
                 </div>
             </mat-card-content>
@@ -59,7 +72,7 @@
             </mat-card-content>
         </mat-card>
     </div>
-    <!-- column -->    
+    <!-- column -->
 </div>
 
 <!-- ============================================================== -->
@@ -67,6 +80,6 @@
 <!-- ============================================================== -->
 <ul>
     <li>
-        
+
     </li>
 </ul>

@@ -2,14 +2,14 @@
 <h4>Lista de Datos</h4>
 <mat-form-field appearance="fill">
   <mat-label><strong>Seleccione una Fecha para ver el combustible consumido del dia</strong></mat-label>
-  <input matInput [matDatepicker]="picker1" (dateChange)="calcularCombustibleSegunFecha($event.value)" [(ngModel)]="fecha_hoy">
+  <input matInput [matDatepicker]="picker1" (dateChange)="calcularCombustibleSegunFecha()" [(ngModel)]="fecha_hoy">
   <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
   <mat-datepicker #picker1></mat-datepicker>
 </mat-form-field>
 
 <mat-form-field appearance="fill">
   <mat-label><strong>Seleccione una Fecha para ver la merma del dia</strong></mat-label>
-  <input matInput [matDatepicker]="picker" (dateChange)="calcularPerdidasSegunFecha($event.value)" [(ngModel)]="fecha_hoy1">
+  <input matInput [matDatepicker]="picker" (dateChange)="calcularPerdidasSegunFecha()" [(ngModel)]="fecha_hoy1">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>

@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, OnInit, Input } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as Chartist from 'chartist';
 import { ChartType, ChartEvent } from 'ng-chartist';
 import { MonitoreosService } from '../services/monitoreos.service';
@@ -22,31 +23,50 @@ export interface Chart {
 	styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements AfterViewInit {
-	lista= [];
+	lista = [];
 	constructor(
 		private db: MonitoreosService,
 		private db1: VentasService) { }
 	dataSource = new MatTableDataSource<any>();
-	ngAfterViewInit() {}
+	fecha_hoy = new Date();
+	
+	ngAfterViewInit() { }
+
 
 	cargarDatosTabla() {
 		this.db.list().subscribe((dato: any) => {
-		  console.log(dato)
-		  if (dato.estado == 1) {
-			this.lista = dato.lista;
-			this.dataSource.data=this.lista;
-			console.log('pppppp');
+			console.log(dato)
+			if (dato.estado == 1) {
+				this.lista = dato.lista;
+				this.dataSource.data = this.lista;
+				this.obtenerUltimosCincoDias();
+				console.log('pppppp');
 			}
-		   else {
-			this.lista = this.dataSource.data = [];
-		  }
+			else {
+				this.lista = this.dataSource.data = [];
+			}
 		})
-	
-	  }
 
-	  ngOnInit() {
+	}
+
+	obtenerUltimosCincoDias() {
+		this.fecha_hoy.setHours(23,59,59,999);
+		var _this = this;
+		var cincoDiasAtras = new Date(this.fecha_hoy);
+		cincoDiasAtras.setHours(0, 0, 0, 0);
+		cincoDiasAtras.setDate(cincoDiasAtras.getDate() - 5);
+
+		var datosUltimosCincoDias = this.lista.filter(function (item) {
+			const itemFecha = new Date(item.fecha);
+			return itemFecha >= cincoDiasAtras && itemFecha <= _this.fecha_hoy;
+		});
+
+		console.log(datosUltimosCincoDias);
+	}
+
+	ngOnInit() {
 		this.cargarDatosTabla();
-	  }
+	}
 	// Barchart
 	barChart1: Chart = {
 		type: 'Bar',
@@ -71,7 +91,7 @@ export class DashboardComponent implements AfterViewInit {
 				'screen and (min-width: 640px)',
 				{
 					axisX: {
-						labelInterpolationFnc: function(
+						labelInterpolationFnc: function (
 							value: number,
 							index: number
 						): string {

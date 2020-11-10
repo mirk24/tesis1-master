@@ -5,6 +5,7 @@ import { ChartType, ChartEvent } from 'ng-chartist';
 import { MonitoreosService } from '../services/monitoreos.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { VentasService } from '../services/ventas.service';
+import { Router } from '@angular/router';
 declare var require: any;
 
 const data: any = require('./data.json');
@@ -26,7 +27,13 @@ export class DashboardComponent implements AfterViewInit {
 	lista = [];
 	constructor(
 		private db: MonitoreosService,
-		private db1: VentasService) { }
+		private db1: VentasService,
+		private router:Router) {
+			if(!localStorage.getItem('token')){
+				router.navigate(['login'])
+			}
+
+		 }
 	dataSource = new MatTableDataSource<any>();
 	fecha_hoy = new Date();
 	

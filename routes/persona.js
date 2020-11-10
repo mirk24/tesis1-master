@@ -11,6 +11,7 @@ var control=require('../controladores/persona.controller');
 // url -> dominio.com/api/persona
 router.get('/', control.lista);
 router.post('/', control.nuevo);
+router.post('/login', control.login);
 router.put('/:id', control.editar);
 router.delete('/:id', control.borrar);
 router.get('/buscar/:q', control.buscar);

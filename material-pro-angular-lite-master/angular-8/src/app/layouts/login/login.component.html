@@ -1,29 +1,28 @@
-<div _ngcontent-mbd-c26="" class="login-register" style="background-image:url(assets/images/background/login-register.jpg);">
-    <div _ngcontent-mbd-c26="" class="login-register-box">
-  
-    
-  <div class="login-wrapper"  Align="center center">
-  
-      <mat-card class="box">
-        <mat-card-header>
-          <mat-card-title>Log in</mat-card-title>
-        </mat-card-header>
-    
-        <form class="example-form">
+<div class="login-page">
+  <mat-card class="mat-elevation-z12">
+    <mat-card-title style="text-align:center;">EESS TickaLoma</mat-card-title>
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
+      <mat-tab label="Bienvenido">
           <mat-card-content>
-            <mat-form-field class="example-full-width">
-              <input [(ngModel)]="usuario" name="usuario" matInput placeholder="Usuario">
+            <form action="">
+            <mat-form-field >
+              <input [(ngModel)]="usuario" name="usuario" matInput placeholder="Correo">
             </mat-form-field>
     
-            <mat-form-field class="example-full-width">
+            <mat-form-field>
               <input type="password" [(ngModel)]="password" name="password" matInput placeholder="Password">
             </mat-form-field>
-          </mat-card-content>
-          <button mat-stroked-button color="accent" (click)="entrar()" class="btn-block">Log in</button>
+          <button mat-stroked-button color="accent" (click)="entrar()" class="btn-block">Ingresar</button>
         </form>
-      </mat-card>
-    
-    </div>
-    </div>
-  </div>
+      </mat-card-content>
+    </mat-tab>
+  </mat-tab-group>
+ 
+</mat-card>
+</div>
+  
+
+
+
+  
   

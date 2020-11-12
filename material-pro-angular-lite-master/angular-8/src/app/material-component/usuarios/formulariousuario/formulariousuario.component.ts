@@ -32,9 +32,9 @@ export class FormulariousuarioComponent implements OnInit {
   form = this.fb.group({
     nombre: ['',[Validators.required]],
     ape_pat: ['',[Validators.required,Validators.maxLength(10)]],
-    //ape_mat: ['',[Validators.required,Validators.maxLength(10)]],
+    ape_mat: ['',[Validators.required,Validators.maxLength(10)]],
     ci: ['',[Validators.required,Validators.maxLength(10)]],
-    //fecha_nac: ['',[Validators.required,Validators.maxLength(10)]],
+    fecha_nac: ['',[Validators.required,Validators.maxLength(10)]],
     direccion: ['',[Validators.required,Validators.maxLength(10)]],
     correo: ['',[Validators.required,Validators.email]],
     contrasenia:  ['',[Validators.required,Validators.maxLength(10)]],

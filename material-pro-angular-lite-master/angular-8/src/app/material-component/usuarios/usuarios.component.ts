@@ -16,7 +16,7 @@ export class UsuariosComponent implements OnInit {
     public dialog: MatDialog) { 
 
   }
-  displayedColumns: string[] = ['nombre','ape_pat','ape_mat','ci','fecha_nac','direccion','correo','contrasenia','tipo_usuario', 'borrar','editar'];
+  displayedColumns: string[] = ['nombre','ape_pat','ape_mat','ci','fecha_nac','direccion','correo','tipo_usuario', 'borrar','editar'];
   lista=[];
   dataSource = new MatTableDataSource<any>();
   ngOnInit() {

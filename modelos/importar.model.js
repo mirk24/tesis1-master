@@ -7,6 +7,7 @@ var esquema = new Schema({
     precio:   Number,
     totalventa: Number,
     vendedor: String,
+    estado: Number
 
 },{
     collection:'importar'

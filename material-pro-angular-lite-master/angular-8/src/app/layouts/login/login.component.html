@@ -1,0 +1,28 @@
+<div class="login-page">
+  <mat-card class="mat-elevation-z12">
+    <mat-card-title style="text-align:center;">EESS TickaLoma</mat-card-title>
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
+      <mat-tab label="Bienvenido">
+          <mat-card-content>
+            <form action="">
+            <mat-form-field >
+              <input [(ngModel)]="usuario" name="usuario" matInput placeholder="Correo">
+            </mat-form-field>
+    
+            <mat-form-field>
+              <input type="password" [(ngModel)]="password" name="password" matInput placeholder="Password">
+            </mat-form-field>
+          <button mat-stroked-button color="accent" (click)="entrar()" class="btn-block">Ingresar</button>
+        </form>
+      </mat-card-content>
+    </mat-tab>
+  </mat-tab-group>
+ 
+</mat-card>
+</div>
+  
+
+
+
+  
+  

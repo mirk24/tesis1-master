@@ -18,6 +18,7 @@ import { DemoMaterialModule } from './demo-material-module';
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 import { ChartsModule } from 'ng2-charts';
+import { LoginComponent } from './layouts/login/login.component';
 
 const routes: Routes = [];
 
@@ -28,7 +29,8 @@ const routes: Routes = [];
     FullComponent,
     AppHeaderComponent,
     SpinnerComponent,
-    AppSidebarComponent
+    AppSidebarComponent,
+    LoginComponent
     
   ],
   imports: [

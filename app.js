@@ -5,17 +5,18 @@ var logger = require('morgan');
 var cors = require('cors');
 ///////////////conexion a base de datos
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mitesis', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/mitesis', { useNewUrlParser: true });
 var db = mongoose.connection;
+var moment = require('moment');
 db.on('error', function (err) {
   console.log(err);
   return;
 });
-db.once('open', function() {
+db.once('open', function () {
   // we're connected!
   console.log('todo legal');
 });
-mongoose.set('debug',true)
+mongoose.set('debug', true)
 //////////////////////////////////////
 
 var indexRouter = require('./routes');
@@ -23,12 +24,12 @@ var usersRouter = require('./routes/users');
 
 
 /////////////////////dominio.com/persona/////////////////////////
-var perRouter= require('./routes/persona');
-var estRouter= require('./routes/estacion');
-var moniRouter= require('./routes/monitoreo');
-var combustible= require('./routes/combustible');
-var ventas=require('./routes/importar');
-fileUpload=require("express-fileupload");
+var perRouter = require('./routes/persona');
+var estRouter = require('./routes/estacion');
+var moniRouter = require('./routes/monitoreo');
+var combustible = require('./routes/combustible');
+var ventas = require('./routes/importar');
+fileUpload = require("express-fileupload");
 var app = express();
 app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
@@ -54,85 +55,64 @@ const Serialport = require('serialport');
 const Readline = Serialport.parsers.Readline;
 var express = require('express');
 var app2 = express();
-var  server  = require('http').Server(app2);
+var server = require('http').Server(app2);
 var io = require('socket.io')(server);
 app2.set('view engine', 'html');
-server.listen(process.env.PORT || 3800);  
-monitoreo=require("./modelos/monitoreo.model");
-const port= new Serialport('COM4', {
-    baudRate: 2400
+server.listen(process.env.PORT || 3800);
+monitoreo = require("./modelos/monitoreo.model");
+
+const port = new Serialport('COM4', {
+  baudRate: 2400
 });
 
-const parser = port.pipe(new Readline({delimiter:'\r\n'}));
+const parser = port.pipe(new Readline({ delimiter: '\r\n' }));
 
 parser.on('open', function () {
-    console.log('connection is opened');
+  console.log('connection is opened');
 });
 
-var infoArduino= new Array();
+var infoArduino = new Array();
 
-const guardarMonitoreo = function(info){
-  if(infoArduino.length<10){
+const guardarMonitoreo = function (info) {
+  if (infoArduino.length < 20) {
     infoArduino.push(info);
   }
-  if(infoArduino.length==10){
-    // var infoPromedio = infoArduino.reduce((curr, next) => {
-    //   if(!curr.dato1){
-    //     curr.dato1 = next.dato1;
-    //   } else {
-    //     curr.dato1 = next.dato1;
-    //   }
-    
-    //   if(!curr.dato2){
-    //     curr.dato2 = next.dato2;
-    //   } else {
-    //     curr.dato2 = next.dato2;
-    //   }
-    //   return curr;
-    // }, {});
+  if (infoArduino.length == 20) {
     var q = new monitoreo();
-    q.temp_actual=Math.round(infoArduino[infoArduino.length-1].dato2); 
-    q.lectura_actual=Math.round(infoArduino[infoArduino.length-1].dato1);
-    q.fecha=new Date(Date.now());
-    q.estado=1;
-    //q.save();
-    infoArduino= new Array();
+    var calc = 0;
+    var total = 0;
+    try {
+      q.temp_actual = Math.round(infoArduino[infoArduino.length - 1].dato2);
+      q.lectura_actual = Math.round(infoArduino[infoArduino.length - 1].dato1);
+      q.fecha = new Date(); //Guardar fecha con formato usando moment
+      q.estado = 1;
+      if (q.temp_actual >= 18 && q.temp_actual <= 30) {
+        calc = (0.99475 * q.lectura_actual);
+      }
+      total = q.lectura_actual - calc;
+      q.perdida = Math.round(total);
+      //q.save();
+    } catch (Error) { console.log(Error.message) };
+    infoArduino = new Array();
+
   }
- 
+
 }
 
 
 io.sockets.on('connection', function (socket) {
   parser.on('data', function (data) {
-      //q=new monitoreo();
-      console.log(data);
-      if(data!=''){
-         try{
-        js=JSON.parse(data);
+    console.log(data);
+    if (data != '') {
+      try {
+        js = JSON.parse(data);
         guardarMonitoreo(js);
-       }
-       catch{console.log('entro');}
-      } 
-      
-      
-      //let t=JSON.parse(data);
-      socket.emit('data',data);
+      }
+      catch { }
+    }
+    socket.emit('data', data);
   });
-  /**socket.on('subscribe', function (data) {
-      socket.join(data.room);
-  });
-  socket.on('arriv', function (data) {
-      console.log(data);
-      io.sockets.in('invitor').emit('send message',data);
-  });
-
-  socket.on('unsubscribe', function (data) {
-      socket.leave(data.room);
-  });**/
 });
-
-  
-
 
 /**************** */
 
@@ -147,12 +127,12 @@ app.use('/api/monitoreo', moniRouter);
 app.use('/api/ventas', ventas);
 app.use('/api/combustible', combustible);
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

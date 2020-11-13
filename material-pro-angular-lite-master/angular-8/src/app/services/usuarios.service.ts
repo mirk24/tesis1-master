@@ -8,6 +8,12 @@ import { Observable } from 'rxjs';
 export class UsuariosService {
   url:string='http://localhost:3000/api/persona';
   constructor(private http:HttpClient) { }
+  public login(item):Observable<any>{
+    return this.http.post(this.url+'/login',item);
+  }
+  public close(item):Observable<any>{
+    return this.http.post(this.url+'/login',item);
+  }
   public add(item):Observable<any>{
     console.log(item);
     return this.http.post(this.url,item);

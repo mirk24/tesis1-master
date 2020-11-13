@@ -8,11 +8,12 @@ import { MonitoreosService } from '../services/monitoreos.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { VentasService } from '../services/ventas.service';
 import { Router } from '@angular/router';
-import { Console } from 'console';
+//import { Console } from 'console';
 import * as moment from 'moment';
 declare var require: any;
 
 const data: any = require('./data.json');
+
 
 export interface Chart {
 	type: ChartType;
@@ -29,6 +30,7 @@ export interface Chart {
 })
 export class DashboardComponent implements AfterViewInit {
 	lista = [];
+	datosQueDebesMandarDeLaVenta = [];
 	constructor(
 		private db: MonitoreosService,
 		private db1: VentasService,
@@ -40,6 +42,10 @@ export class DashboardComponent implements AfterViewInit {
 	}
 	dataSource = new MatTableDataSource<any>();
 	fecha_hoy = new Date();
+	dataBarChart = {
+		labels: [],
+		series: []
+	};
 
 	ngAfterViewInit() { }
 
@@ -50,66 +56,80 @@ export class DashboardComponent implements AfterViewInit {
 			if (dato.estado == 1) {
 				this.lista = dato.lista;
 				this.dataSource.data = this.lista;
-				this.obtenerUltimosCincoDias();
-				console.log('pppppp');
+				this.obtenerConsumoUltimosCincoDias();
 			}
 			else {
 				this.lista = this.dataSource.data = [];
 			}
-		})
-
+		});
+		
+		this.db1.list().subscribe((datos: any) => {
+			console.log(datos);
+			if(datos && datos.estado === 1){
+				this.datosQueDebesMandarDeLaVenta = datos.lista;
+				this.obtenerVentasUltimosCincoDias();
+			}
+		});
 	}
 
-	obtenerUltimosCincoDias() {
+	obtenerConsumoUltimosCincoDias() 
+	{
 		this.fecha_hoy.setHours(23, 59, 59, 999);
-		var _this = this;
-		var cincoDiasAtras = new Date(this.fecha_hoy);
-		var resta = 0;
-		var fechaC = new Date();
-		var fechaA = new Date(moment(this.fecha_hoy).format("DD/MM/YYYY"));
-		var resultado = 0;
-		var rest = 0;
-		var suma = 0;
-		var aux = 0;
+		let _this = this;
+		let cincoDiasAtras = new Date(this.fecha_hoy);
+		let suma = 0;
+		let aux = 0;
 		cincoDiasAtras.setHours(0, 0, 0, 0);
-		cincoDiasAtras.setDate(cincoDiasAtras.getDate() - 6);
+		cincoDiasAtras.setDate(cincoDiasAtras.getDate() - 4);
 
-		var datosUltimosCincoDias = this.lista.filter(function (item) {
+		// Este es el filtrado de los datos del consumo
+		let consumoUltimosCincoDias = this.lista.filter(function (item) {
 			const itemFecha = new Date(item.fecha);
+			item.fechaFormato = moment(item.fecha).format("DD/MM/YYYY");
 			return itemFecha >= cincoDiasAtras && itemFecha <= _this.fecha_hoy;
 		});
-		console.log(datosUltimosCincoDias);
-			let consumo = datosUltimosCincoDias.reduce(function (curr1, next) {
-				fechaC =new Date(moment(next.fecha).format("DD/MM/YYYY"));
-				console.log(fechaA);
-				console.log(fechaC);
-				if(fechaA.getTime() == fechaC.getTime())
-				{
-					rest = parseFloat(next.lectura_actual);
-					if(rest < resta){
-						resultado = resta - rest;
-						suma += resultado;
-					  }
-					  resta = rest;
-					console.log("entro");
-				}
-				else{
-					aux = suma ;
-					suma = 0;
-					console.log(suma);
-					console.log(aux);
-				}
-					
-				
-				fechaA = fechaC;
-				console.log(rest);
-				console.log(suma);
-				return suma;
-				
-			  }, 0);
+
+		let consumo = consumoUltimosCincoDias.length > 0 ? consumoUltimosCincoDias.reduce(function (curr, next) {
+			if (Object.keys(curr).indexOf(next.fechaFormato) === -1) {
+				curr[next.fechaFormato] = 0;
+			} else {
+				suma = parseFloat(next.lectura_actual) < aux ? aux - parseFloat(next.lectura_actual) : 0
+				curr[next.fechaFormato] += suma;
+			}
+			aux = parseFloat(next.lectura_actual);
+			return curr;
+		}, {}) : [];
+
+		this.dataBarChart.labels = [].concat(Object.keys(consumo));
+		this.dataBarChart.series = this.dataBarChart.series.concat([Object.values(consumo).map(item => parseFloat(item.toString()))]);
+	}
+
+	obtenerVentasUltimosCincoDias()
+	{
+		let _this = this;
+		let cincoDiasAtras = new Date(this.fecha_hoy);
+		cincoDiasAtras.setHours(0, 0, 0, 0);
+		cincoDiasAtras.setDate(cincoDiasAtras.getDate() - 4);
+
+		// Esta es el filtrado de los datos de las ventas
+		let ventasUltimosCincoDias = this.datosQueDebesMandarDeLaVenta.filter(function(item){
+			const itemFecha = new Date(item.fecha);
+			item.fechaFormato = moment(item.fecha).format("DD/MM/YYYY");
+			return itemFecha >= cincoDiasAtras && itemFecha <= _this.fecha_hoy;
+		});
 		
-		
-		//console.log(consumo);
+		let ventaGasolina = ventasUltimosCincoDias.length > 0 ? ventasUltimosCincoDias.reduce(function(curr, next){
+			if (Object.keys(curr).indexOf(next.fechaFormato) === -1) {
+				curr[next.fechaFormato] = next.volumen;
+			} else {
+				curr[next.fechaFormato] += next.volumen;
+			}
+
+			return curr;
+		}, {}) : [];
+
+		//Aqui se agrega los valores del filtrado de los datos de las ventas
+		this.dataBarChart.series = this.dataBarChart.series.concat([Object.values(ventaGasolina).map(item => parseFloat(item.toString()))]);
 	}
 
 	ngOnInit() {
@@ -118,10 +138,10 @@ export class DashboardComponent implements AfterViewInit {
 	// Barchart
 	barChart1: Chart = {
 		type: 'Bar',
-		data: data['Bar'],
+		data: this.dataBarChart,
 		options: {
 			seriesBarDistance: 15,
-			high: 12,
+			
 
 			axisX: {
 				showGrid: false,
@@ -152,14 +172,14 @@ export class DashboardComponent implements AfterViewInit {
 	};
 
 	// This is for the donute chart
-	donuteChart1: Chart = {
-		type: 'Pie',
-		data: data['Pie'],
-		options: {
-			donut: true,
-			height: 260,
-			showLabel: false,
-			donutWidth: 20
-		}
-	};
+	// donuteChart1: Chart = {
+	// 	type: 'Pie',
+	// 	data: data['Pie'],
+	// 	options: {
+	// 		donut: true,
+	// 		height: 260,
+	// 		showLabel: false,
+	// 		donutWidth: 20
+	// 	}
+	// };
 }

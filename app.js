@@ -74,10 +74,10 @@ parser.on('open', function () {
 var infoArduino = new Array();
 
 const guardarMonitoreo = function (info) {
-  if (infoArduino.length < 20) {
+  if (infoArduino.length < 50) {
     infoArduino.push(info);
   }
-  if (infoArduino.length == 20) {
+  if (infoArduino.length == 50) {
     var q = new monitoreo();
     var calc = 0;
     var total = 0;

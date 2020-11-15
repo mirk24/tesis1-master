@@ -37,8 +37,9 @@ export class MedicionComponent implements OnInit {
   contador: number = 0;
   mensajesAlerta = {
     isTemperaturaAlta: "Nivel de temperatura alto en el tanque ",
-    isVentaIrregular: "Cambio considerable en el volumen del tanque",
-    isGasolinaBaja: "Nivel de gasolina bajo en el tanque"
+    isVentaIrregular: "ALERTA !!! Cambio considerable en el volumen del tanque",
+    isGasolinaBaja: "Nivel de gasolina bajo en el tanque",
+    isPesoMuerto: "Alerta !!!! Detener el abastecimiento"
   };
   nivelActual = -1;
   getMessage() {
@@ -46,30 +47,29 @@ export class MedicionComponent implements OnInit {
       .fromEvent("data").subscribe((data: any) => {
         this.dato_m = data.value;
         try {
-          
           //Incremento del contador a medida que llega informacion
           //Cada 30 intervalos son 6 segundos en promedio
           this.contador = this.contador + 1;
           let t = JSON.parse(data);
-          if (this.contador % 10 == 0) {
+          if (this.contador % 20 == 0) {
             this.chart.data.datasets[0].data.push(t.dato1);
           }
-          if (this.contador % 50 == 0) {
+          if (this.contador % 20 == 0) {
             this.comprobarAlertas(t);
             this.chart.data.datasets[1].data.push(t.dato2);
             this.chart.data.labels.push(moment().format('HH:mm:ss'));
           }
 
-          if (this.contador % 150 === 0) {
+          if (this.contador % 40 === 0) {
             if (this.nivelActual !== -1) {
-              if ((this.nivelActual - t.dato1) >= 1000) {
+              if ((this.nivelActual - t.dato1) >= 20) {
                 this.mostrarAlertaVentaIrregular();
               }
             }
             this.nivelActual = t.dato1;
           }
-
           this.chart.update();
+          
         } catch (Error){
           console.log(`No llego por lo siguiente: ${Error.message}`);
         }
@@ -86,6 +86,9 @@ export class MedicionComponent implements OnInit {
 
   mostrarAlertaTemperaturaAlta() {
     this.mostrarMensajeError(this.mensajesAlerta.isTemperaturaAlta);
+  } 
+  mostrarAlertaPesoMuerto() {
+    this.mostrarMensajeError(this.mensajesAlerta.isPesoMuerto);
   }
 
   mostrarMensajeError(texto: string){
@@ -93,11 +96,14 @@ export class MedicionComponent implements OnInit {
   }
 
   comprobarAlertas(info) {
-    if (info.dato1 < 420) {
+    if (info.dato1 < 250 && info.dato1 >230) {
       this.mostrarAlertaGasolinaBaja()
     }
-    if (info.dato2 > 25) {
+    if (info.dato2 > 35) {
       this.mostrarAlertaTemperaturaAlta();
+    }
+    if (info.dato1 < 100 && info.dato1 > 95) {
+      this.mostrarAlertaPesoMuerto();
     }
   }
 

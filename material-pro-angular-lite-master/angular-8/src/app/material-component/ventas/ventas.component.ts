@@ -114,7 +114,7 @@ export class VentasComponent implements OnInit {
         return fecha_format <= _this.fecha_fin && fecha_format >= _this.fecha_inicio;
       });
       let totales = datosFecha.reduce(function (curr, next) {
-        curr += parseFloat(next.totalventa);
+        curr += parseFloat(next.volumen);
         return curr;
       }, 0);
       this.dataSource.data = datosFecha;

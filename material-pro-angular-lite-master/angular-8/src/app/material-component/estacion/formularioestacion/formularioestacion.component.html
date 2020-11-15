@@ -65,10 +65,15 @@
           </mat-error>
         </mat-form-field>
       </td>
+      
+      <mat-form-field appearance="fill">
+        <mat-label>Encargado</mat-label>
+        <mat-select formControlName="encargado" name="encargado" [(ngModel)]="per.encargado">
+          <mat-option *ngFor="let t of combolista" [value]="t._id">{{t.nombre}}</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <td><select formControlName="encargado" name="encargado" id="" [(ngModel)]="per.encargado">
-          <option *ngFor="let t of combolista" [value]="t._id">{{t.nombre}}</option>
-        </select></td>
+      
     </tr>
   </table>
 

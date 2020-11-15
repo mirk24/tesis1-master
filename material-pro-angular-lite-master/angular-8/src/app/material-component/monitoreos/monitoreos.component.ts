@@ -98,6 +98,7 @@ export class MonitoreosComponent implements OnInit {
     const fecha = moment(this.fecha_hoy1).format("DD/MM/YYYY"); 
     var rest = 0;
     var suma = 0;
+    var cont = 0;
     let datosFecha = this.lista.filter(function (item) {
       console.log(fecha, item.fecha);
       return item.fecha === fecha; 
@@ -106,12 +107,13 @@ export class MonitoreosComponent implements OnInit {
       rest = curr;
       suma ++;
       curr += parseFloat(next.perdida);
+      console.log(suma);
       console.log(curr);
       return curr;
     }, 0);
     console.log(datosFecha, perdidas);
     this.dataSource.data = datosFecha;
-    this.perdida_dia =perdidas;
+    this.perdida_dia =perdidas/suma;
     
   }
 

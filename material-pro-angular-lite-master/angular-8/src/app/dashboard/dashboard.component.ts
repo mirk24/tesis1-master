@@ -134,6 +134,7 @@ export class DashboardComponent implements AfterViewInit {
 
 	ngOnInit() {
 		this.cargarDatosTabla();
+		
 	}
 	// Barchart
 	barChart1: Chart = {

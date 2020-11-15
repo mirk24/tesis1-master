@@ -86,8 +86,11 @@ const guardarMonitoreo = function (info) {
       q.lectura_actual = Math.round(infoArduino[infoArduino.length - 1].dato1);
       q.fecha = new Date(); //Guardar fecha con formato usando moment
       q.estado = 1;
-      if (q.temp_actual >= 18 && q.temp_actual <= 30) {
+      if (q.temp_actual >= 15 && q.temp_actual <= 22) {
         calc = (0.99475 * q.lectura_actual);
+      }
+      if (q.temp_actual > 22 && q.temp_actual <= 35) {
+        calc = (0.98972 * q.lectura_actual);
       }
       total = q.lectura_actual - calc;
       q.perdida = Math.round(total);

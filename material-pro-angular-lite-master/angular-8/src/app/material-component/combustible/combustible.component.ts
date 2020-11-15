@@ -21,7 +21,7 @@ export class CombustibleComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  displayedColumns: string[] = ['litros_comprados', 'fecha_adquirida', 'tipo_de_combustible', 'chofer', 'placa_sisterna'];
+  displayedColumns: string[] = ['litros_comprados', 'fecha_adquirida', 'tipo_de_combustible', 'chofer', 'placa_sisterna', 'editar'];
   lista = [];
   dataSource = new MatTableDataSource<any>()
 

@@ -30,15 +30,15 @@ export class FormulariousuarioComponent implements OnInit {
 
   error=[];
   form = this.fb.group({
-    nombre: ['', [Validators.required]],
-    ape_pat: ['',[Validators.required]],
-    ape_mat: ['',[Validators.required,Validators.maxLength(10)]],
+    nombre: ['', [Validators.required, Validators.pattern("^[a-zA-Z]+$")]],
+    ape_pat: ['',[Validators.required, Validators.pattern("^[a-zA-Z]+$")]],
+    ape_mat: ['',[Validators.required, Validators.pattern("^[a-zA-Z]+$")]],
     ci: ['',[Validators.required,Validators.maxLength(10)]],
-    fecha_nac: ['',[Validators.required,Validators.maxLength(10)]],
-    direccion: ['',[Validators.required,Validators.maxLength(10)]],
+    fecha_nac: ['',[Validators.required,Validators.maxLength(15)]],
+    direccion: ['',[Validators.required,Validators.maxLength(20)]],
     correo: ['',[Validators.required,Validators.email]],
-    contrasenia:  ['',[Validators.required,Validators.maxLength(10)]],
-    tipo_usuario: ['',[Validators.required,Validators.maxLength(10)]]
+    contrasenia:  ['',[Validators.required,Validators.maxLength(20)]],
+    tipo_usuario: ['',[Validators.required,Validators.maxLength(15), Validators.pattern("^[a-zA-Z]+$")]]
   });
   
 

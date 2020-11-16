@@ -11,21 +11,21 @@ import { UsuariosService } from '../../../services/usuarios.service';
 })
 export class FormularioestacionComponent implements OnInit {
 
-  per={nombre_est:'',ubicacion:'',numero_playas:'',numero_disp:'',numero_tanques:'',telefono:'',encargado:'',tanques:{cantidad_max:'',cantidad_min:'',cantidad_actual:'',tipo_tanque:''},_id:''};
+  per={nombre_est:'',ubicacion:'',numero_playas:'',numero_disp:'',numero_tanques:'',telefono:'',encargado:'',tanques:{cantidad_max:'',cantidad_min:'',tipo_tanque:''},_id:''};
 
   error=[];
   form = this.fb.group({
     nombre_est: ['',[Validators.required]],
     ubicacion: ['',[Validators.required]],
-    numero_playas: ['',[Validators.required,Validators.maxLength(10)]],
-    numero_disp: ['',[Validators.required,Validators.maxLength(10)]],
-    numero_tanques: ['',[Validators.required,Validators.maxLength(10)]],
-    telefono: ['',[Validators.required,Validators.maxLength(10)]],
-    encargado: ['',[Validators.required,Validators.maxLength(20)]],
-    cantidad_max:  ['',[Validators.required,Validators.maxLength(10)]],
-    cantidad_min: ['',[Validators.required,Validators.maxLength(10)]],
-    cantidad_actual: ['',[Validators.required,Validators.maxLength(10)]],
-    tipo_tanque: ['',[Validators.required,Validators.maxLength(10)]]
+    numero_playas: ['',[Validators.required,Validators.maxLength(1), Validators.pattern("^[0-9]*$")]],
+    numero_disp: ['',[Validators.required,Validators.maxLength(1), Validators.pattern("^[0-9]*$")]],
+    numero_tanques: ['',[Validators.required,Validators.maxLength(1), Validators.pattern("^[0-9]*$")]],
+    telefono: ['',[Validators.required,Validators.maxLength(11), Validators.pattern("^[0-9]*$")]],
+    encargado: ['',[Validators.maxLength(100)]],
+    cantidad_max:  ['',[Validators.required,Validators.maxLength(4), Validators.pattern("^[0-9]*$")]],
+    cantidad_min: ['',[Validators.required,Validators.maxLength(4), Validators.pattern("^[0-9]*$")]],
+    //cantidad_actual: ['',[Validators.required,Validators.maxLength(4), Validators.pattern("^[0-9]*$")]],
+    tipo_tanque: ['',[Validators.required,Validators.maxLength(10), Validators.pattern("^[a-zA-Z]+$")]]
 
 
   });

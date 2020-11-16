@@ -16,8 +16,14 @@ function nuevaEstacion(req, res){
                 return res.status(200).json({estado:0,error:err});
             if (!nuevo)
                 return res.status(200).json({estado:0,error:'ops paso algo malo'});
-            else
-                return res.status(200).json({estado:1,dato:nuevo});
+            else{
+                Estacion.findById(nuevo._id).populate('encargado').exec((err,resul)=>{
+                    console.log(err);
+                    return res.status(200).json({estado:1, dato:resul});
+                })
+                 
+            }
+               
         }
     )
 }

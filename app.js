@@ -81,9 +81,34 @@ const guardarMonitoreo = function (info) {
     var q = new monitoreo();
     var calc = 0;
     var total = 0;
+    temp = 0;
+    niv = 0;
     try {
+      temp = Math.round(infoArduino[infoArduino.length - 1].dato2);
+      if(temp <=0.0 || temp >70){
+        q.fallo = "fallo en el sensor de calor";
+      }
+      if(isNaN(temp)){
+        q.fallo = "Verificar sensor de calor";
+      }
+      if (temp === undefined || temp === null){
+        q.fallo = "Sensor de calor apagado";
+      }
+      niv = Math.round(infoArduino[infoArduino.length - 1].dato1);
+      if(niv < -300 || niv > 700){
+        q.fallo = "fallo en el sensor ultrasonico";
+        q.lectura_actual = 0
+      }else{
+        q.lectura_actual = Math.round(infoArduino[infoArduino.length - 1].dato1);
+      }
+      if(isNaN(niv)){
+        q.fallo = "Verificar sensor ultrasonico";
+      }
+      if (niv === undefined || niv === null){
+        q.fallo = "Sensor ultrasonico apagado";
+      }
       q.temp_actual = Math.round(infoArduino[infoArduino.length - 1].dato2);
-      q.lectura_actual = Math.round(infoArduino[infoArduino.length - 1].dato1);
+      //q.lectura_actual = Math.round(infoArduino[infoArduino.length - 1].dato1);
       q.fecha = new Date(); //Guardar fecha con formato usando moment
       q.estado = 1;
       if (q.temp_actual >= 15 && q.temp_actual <= 22) {
@@ -101,10 +126,33 @@ const guardarMonitoreo = function (info) {
   }
 
 }
-
-
+setInterval(()=>{
+  if(estadoConexion == 1){
+    estadoConexion = 0;
+  }else{
+    contarError ++; 
+    if(contarError > 30){
+      var q = new monitoreo();
+      //console.log("no hay conexion a arduino");
+      q.fallo = "no hay conexion a arduino";
+      q.fecha = new Date(); 
+      q.estado = 1;
+      //q.save();
+     }
+  }
+},3000)
+var contarError = 0;
+var estadoConexion = 0;
+io.sockets.on('disconnect', function(socket){
+  io.sockets.disconnect();
+  io.sockets.close();
+})
 io.sockets.on('connection', function (socket) {
+  socket.on('error', function(){
+    socket.socket.reconect();
+  });
   parser.on('data', function (data) {
+    estadoConexion = 1;
     console.log(data);
     if (data != '') {
       try {
@@ -113,6 +161,7 @@ io.sockets.on('connection', function (socket) {
       }
       catch { }
     }
+    //estadoConexion = 0;
     socket.emit('data', data);
   });
 });

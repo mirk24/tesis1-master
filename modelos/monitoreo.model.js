@@ -6,6 +6,7 @@ var esquema = new Schema({
     lectura_actual: String,
     fecha: Date,
     perdida: Number,
+    fallo: String,
     estado: Number
 },
     {

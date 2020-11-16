@@ -23,7 +23,7 @@ export class MonitoreosComponent implements OnInit {
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  displayedColumns: string[] = ['temp_actual', 'lectura_actual', 'fecha', 'perdida'];
+  displayedColumns: string[] = ['temp_actual', 'lectura_actual', 'fecha', 'perdida', 'fallo'];
   lista = [];
   dataSource = new MatTableDataSource<any>();
   fechasDisponibles = new Array();
@@ -81,7 +81,7 @@ export class MonitoreosComponent implements OnInit {
   open() {
     const dialogRef = this.dialog.open(FormulariomonitoreosComponent, {
       width: '750px',
-      data: { temp_actual: '', lectura_actual: '', fecha: '', perdida: '' }
+      data: { temp_actual: '', lectura_actual: '', fecha: '', perdida: '', fallo:'' }
 
     });
 

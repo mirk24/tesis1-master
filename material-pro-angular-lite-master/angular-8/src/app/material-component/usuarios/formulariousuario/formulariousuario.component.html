@@ -135,5 +135,5 @@
     </mat-expansion-panel>
    </mat-accordion>
    <button mat-raised-button (click)="onNoClick()"> Cancelar</button>
-  <button mat-raised-button (click)="enviar()"> enviar</button>
+  <button mat-raised-button [disabled]="!form.valid" (click)="enviar()"> enviar</button>
 </form>

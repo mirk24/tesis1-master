@@ -68,7 +68,15 @@ function editarPersona(req, res){
 }
 
 function borrarPersona(req, res){
-    res.status(200).json({mgs:'todo legal3'});
+
+    Usuario.findByIdAndUpdate(req.params.id,{estado:0},req.body,(err,resultado)=>{
+        if (err)
+            return res.status(200).json({estado:0,error:err});
+        if (!resultado)
+            return res.status(200).json({estado:0,error:'ops paso algo malo'});
+        else
+            return res.status(200).json({estado:1,estaciones:resultado});
+    });
 }
 
 function buscarPersona(req, res){

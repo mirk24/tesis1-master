@@ -1,122 +1,139 @@
 <form [formGroup]="form" class="example-form">
-<mat-accordion class="example-headers-align">
-  <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Datos Personales
-      </mat-panel-title>
-      <mat-panel-description>
-        Ingresa los siguentes datos:
-        <mat-icon>account_circle</mat-icon>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Datos Personales
+        </mat-panel-title>
+        <mat-panel-description>
+          Ingresa los siguentes datos:
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
 
-    <td><mat-form-field hintLabel="max 10" appearance="fill" >
-      <input matInput #input maxlength="10" placeholder="Ex. Nougat" formControlName="nombre" name="nombre" [(ngModel)]="per.nombre" placeholder="Nombre" >
-      <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
-      <mat-error *ngIf="form.controls.nombre.hasError('required')">
-        Campo <strong>requerido</strong>
-      </mat-error>
-    </mat-form-field></td>
-    
-    <td><mat-form-field class="example-full-width2">
-            <input matInput formControlName="ape_pat" name="ape_pat" [(ngModel)]="per.ape_pat" placeholder="Apellido Paterno">
-            <mat-error *ngIf="form.controls.ape_pat.hasError('required')">
-              Campo <strong>requerido</strong>
-            </mat-error>
-          </mat-form-field></td>
-         
-    <td><mat-form-field class="example-full-width3">
-          <input matInput formControlName="ape_mat" name="ape_mat" [(ngModel)]="per.ape_mat" placeholder="Apellido Materno">
-          </mat-form-field></td>
-
-      
-
-        <mat-form-field hintLabel="max 10" appearance="fill" >
-            <input matInput #input maxlength="10" placeholder="Ex. Nougat" formControlName="ci" name="ci" [(ngModel)]="per.ci" placeholder="CI">
-            <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
-            <mat-error *ngIf="form.controls.ci.hasError('required')">
-              Campo <strong>requerido</strong>
-            </mat-error>
-          </mat-form-field>
-          
-        
-        
-        <td><mat-form-field appearance="fill">
-            <input matInput [matDatepicker]="picker" formControlName="fecha_nac" name="fecha_nac" [(ngModel)]="per.fecha_nac" placeholder="Fecha de Nacimiento">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field></td>
-
-
-        <td><mat-form-field class="example-full-width6">
-            <input matInput formControlName="direccion" name="direccion" [(ngModel)]="per.direccion" placeholder="Direccion">
-            <mat-error *ngIf="form.controls.direccion.hasError('required')">
-              Campo <strong>requerido</strong>
-            </mat-error>
-          </mat-form-field></td>
-
-
- 
-  <mat-action-row>
-      <button mat-button color="warn" (click)="prevStep()">Atras</button>
-      <button mat-button color="primary" (click)="nextStep()">Siguiente</button>
-    </mat-action-row>
-  </mat-expansion-panel>      
-        
-        
-        
-<mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Datos de Usuario
-      </mat-panel-title>
-      <mat-panel-description>
-        Ingrese los siguientes datos:
-        <mat-icon>supervised_user_circle</mat-icon>
-      </mat-panel-description>
-    </mat-expansion-panel-header>   
-
-        
-        <mat-form-field class="example-full-width7">
-            <input matInput formControlName="correo" name="correo" [(ngModel)]="per.usuario.correo" placeholder="abc@ejemplo.com">
-            <mat-error *ngIf="form.controls.correo.hasError('email') && !form.controls.correo.hasError('required')">
-              Ingresa un Email valido
-            </mat-error>
-            <mat-error *ngIf="form.controls.correo.hasError('required')">
-              Campo <strong>requerido</strong>
-            </mat-error>
-          
-          </mat-form-field>
-      
-   
-        <mat-form-field class="fill">
-            <input matInput [type]="hide ? 'password' : 'text'" formControlName="contrasenia" name="contrasenia" [(ngModel)]="per.usuario.contrasenia" placeholder="Contraseña">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </button>
+      <td>
+        <mat-form-field hintLabel="max 10" appearance="fill">
+          <input matInput #input maxlength="10" placeholder="Ex. Nougat" formControlName="nombre" name="nombre"
+            [(ngModel)]="per.nombre" placeholder="Nombre">
+          <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+          <mat-error *ngIf="form.controls.nombre.hasError('required')">
+            Campo <strong>requerido</strong>
+          </mat-error>
         </mat-form-field>
-          
+      </td>
+
+      <td>
+        <mat-form-field class="example-full-width2">
+          <input matInput formControlName="ape_pat" name="ape_pat" [(ngModel)]="per.ape_pat"
+            placeholder="Apellido Paterno">
+          <mat-error *ngIf="form.controls.ape_pat.hasError('required')">
+            Campo <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </td>
+
+      <td>
+        <mat-form-field class="example-full-width3">
+          <input matInput formControlName="ape_mat" name="ape_mat" [(ngModel)]="per.ape_mat"
+            placeholder="Apellido Materno">
+        </mat-form-field>
+      </td>
 
 
-        <mat-form-field class="example-full-width9">
-            <input matInput type="text" formControlName="tipo_usuario" name="tipo_usuario" [(ngModel)]="per.usuario.tipo_usuario" placeholder="Tipo de Usuario">
-            <mat-error *ngIf="form.controls.tipo_usuario.hasError('required')">
-              Campo <strong>requerido</strong>
-            </mat-error>
-          </mat-form-field>
-     
-  
-  
-    
-      <button mat-raised-button   (click)="onNoClick()" > Cancelar</button>
-      <button mat-raised-button  (click)="enviar()"  > enviar</button>
- 
-<mat-action-row>
-      <button mat-button color="warn" (click)="prevStep()">Previous</button>
-      <button mat-button color="primary" (click)="nextStep()">End</button>
-    </mat-action-row>
-  </mat-expansion-panel>
 
-</mat-accordion>
+      <mat-form-field hintLabel="max 10" appearance="fill">
+        <input matInput #input maxlength="10" placeholder="Ex. Nougat" formControlName="ci" name="ci"
+          [(ngModel)]="per.ci" placeholder="CI">
+        <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+        <mat-error *ngIf="form.controls.ci.hasError('required')">
+          Campo <strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+
+
+
+      <td>
+        <mat-form-field appearance="fill">
+          <input matInput [matDatepicker]="picker" formControlName="fecha_nac" name="fecha_nac"
+            [(ngModel)]="per.fecha_nac" placeholder="Fecha de Nacimiento">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </td>
+
+
+      <td>
+        <mat-form-field class="example-full-width6">
+          <input matInput formControlName="direccion" name="direccion" [(ngModel)]="per.direccion"
+            placeholder="Direccion">
+          <mat-error *ngIf="form.controls.direccion.hasError('required')">
+            Campo <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </td>
+
+
+
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Atras</button>
+        <button mat-button color="primary" (click)="nextStep()">Siguiente</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+
+
+
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Datos de Usuario
+        </mat-panel-title>
+        <mat-panel-description>
+          Ingrese los siguientes datos:
+          <mat-icon>supervised_user_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+
+      <mat-form-field class="example-full-width7">
+        <input matInput formControlName="correo" name="correo" [(ngModel)]="per.usuario.correo"
+          placeholder="abc@ejemplo.com">
+        <mat-error *ngIf="form.controls.correo.hasError('email') && !form.controls.correo.hasError('required')">
+          Ingresa un Email valido
+        </mat-error>
+        <mat-error *ngIf="form.controls.correo.hasError('required')">
+          Campo<strong>requerido</strong>
+        </mat-error>
+
+      </mat-form-field>
+
+
+      <mat-form-field class="fill">
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="contrasenia" name="contrasenia"
+          [(ngModel)]="per.usuario.contrasenia" placeholder="Contraseña">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+
+
+      <mat-form-field class="example-full-width9">
+        <input matInput type="text" formControlName="tipo_usuario" name="tipo_usuario"
+          [(ngModel)]="per.usuario.tipo_usuario" placeholder="Tipo de Usuario">
+        <mat-error *ngIf="form.controls.tipo_usuario.hasError('required')">
+           Campo<strong>requerido</strong>
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Previous</button>
+        <button mat-button color="primary" (click)="nextStep()">End</button>
+      </mat-action-row>
+      
+    </mat-expansion-panel>
+   </mat-accordion>
+   <button mat-raised-button (click)="onNoClick()"> Cancelar</button>
+  <button mat-raised-button (click)="enviar()"> enviar</button>
 </form>

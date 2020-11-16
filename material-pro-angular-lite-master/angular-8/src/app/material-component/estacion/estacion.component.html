@@ -31,7 +31,7 @@
   </ng-container>
   <ng-container matColumnDef="encargado">
     <th mat-header-cell *matHeaderCellDef><strong> Encargado</strong></th>
-    <td mat-cell *matCellDef="let element">{{element.encargado.nombre}}</td>
+    <td mat-cell *matCellDef="let element">{{element.encargado?.nombre}}</td>
   </ng-container>
   <ng-container matColumnDef="cantidad_max">
     <th mat-header-cell *matHeaderCellDef><strong>Cantidad Maxima</strong></th>
@@ -48,15 +48,6 @@
   <ng-container matColumnDef="tipo_tanque">
     <th mat-header-cell *matHeaderCellDef><strong>Tipo de Combustible</strong></th>
     <td mat-cell *matCellDef="let element">{{element.tanques.tipo_tanque}}</td>
-  </ng-container>
-
-  <ng-container matColumnDef="borrar">
-    <th mat-header-cell *matHeaderCellDef> borrar </th>
-    <td mat-cell *matCellDef="let element">
-      <button mat-fab (click)="onBorrar(element)" aria-label="Example icon-button with a heart icon">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </td>
   </ng-container>
   
   <ng-container matColumnDef="editar">

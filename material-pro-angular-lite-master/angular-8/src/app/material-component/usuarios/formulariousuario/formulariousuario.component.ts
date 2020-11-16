@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { FormBuilder,Validators } from '@angular/forms'
+import { FormBuilder,FormControl,Validators } from '@angular/forms'
 import { UsuariosService } from '../../../services/usuarios.service';
 import {MatAccordion} from '@angular/material/expansion';
 //import { MatFormFieldModule, MatInputModule } from '@angular/material';
@@ -30,8 +30,8 @@ export class FormulariousuarioComponent implements OnInit {
 
   error=[];
   form = this.fb.group({
-    nombre: ['',[Validators.required]],
-    ape_pat: ['',[Validators.required,Validators.maxLength(10)]],
+    nombre: ['', [Validators.required]],
+    ape_pat: ['',[Validators.required]],
     ape_mat: ['',[Validators.required,Validators.maxLength(10)]],
     ci: ['',[Validators.required,Validators.maxLength(10)]],
     fecha_nac: ['',[Validators.required,Validators.maxLength(10)]],

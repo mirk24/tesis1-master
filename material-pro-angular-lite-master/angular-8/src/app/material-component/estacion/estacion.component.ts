@@ -15,7 +15,7 @@ export class EstacionComponent implements OnInit {
     public dialog: MatDialog) { 
 
   }
-  displayedColumns: string[] = ['nombre_est','ubicacion','numero_playas','numero_disp','numero_tanques','telefono','encargado','cantidad_max','cantidad_min','cantidad_actual','tipo_tanque', 'borrar','editar'];
+  displayedColumns: string[] = ['nombre_est','ubicacion','numero_playas','numero_disp','numero_tanques','telefono','encargado','cantidad_max','cantidad_min','cantidad_actual','tipo_tanque','editar'];
   lista=[];
   dataSource = new MatTableDataSource<any>()
   ngOnInit() {

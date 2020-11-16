@@ -21,12 +21,10 @@ export class UsuariosComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   ngOnInit() {
     this.db.list().subscribe((dato:any)=>{
-      console.log("pppppp");
       if(dato.estado==1){
         
         this.lista=dato.lista;
         this.dataSource.data=this.lista;
-        console.log("pppppp");
       }else{
         this.lista=this.dataSource.data=[];
 
@@ -39,27 +37,17 @@ export class UsuariosComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   onBorrar(item){
+    if (confirm("¡Esta seguro de borrar?")) {
+      this.db.delete(item._id).subscribe((dato: any) => {
+        if (dato.estado == 1) {
+          this.lista.splice(this.lista.indexOf(item), 1);
+          this.dataSource.data = this.lista;
+        } else {
 
-    
- //     const dialogRef = this.dialog.open(ConfirmarComponent, {
-  //      width: '250px',
-  //      data: ''
-  //    });
-  
-  /*     dialogRef.afterClosed().subscribe(result => {
-        if(result=='ok'){*/
-      //     this.db.delete(item._id).subscribe((dato:any)=>{
-      //       console.log("entraaaaa");
-      //   if(dato.estado==1){
-      //     console.log("entra");
-      //     this.lista.splice(this.lista.indexOf(item),1);
-      //     this.dataSource.data=this.lista;
-      //   }else{
+        }
 
-      //   }
-        
-      // });
-        //}
+      });
+    }
      
   }
   onEditar(item){

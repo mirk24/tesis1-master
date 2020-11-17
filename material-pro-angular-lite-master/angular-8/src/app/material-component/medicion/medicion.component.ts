@@ -39,7 +39,8 @@ export class MedicionComponent implements OnInit {
     isTemperaturaAlta: "Nivel de temperatura alto en el tanque ",
     isVentaIrregular: "ALERTA !!! Cambio considerable en el volumen del tanque",
     isGasolinaBaja: "Nivel de gasolina bajo en el tanque",
-    isPesoMuerto: "Alerta !!!! Detener el abastecimiento"
+    isPesoMuerto: "Alerta !!!! Detener el abastecimiento",
+    isLleno: "Tanque lleno"
   };
   nivelActual = -1;
   getMessage() {
@@ -90,20 +91,26 @@ export class MedicionComponent implements OnInit {
   mostrarAlertaPesoMuerto() {
     this.mostrarMensajeError(this.mensajesAlerta.isPesoMuerto);
   }
+  mostrarAlertaLleno() {
+    this.mostrarMensajeError(this.mensajesAlerta.isLleno);
+  }
 
   mostrarMensajeError(texto: string){
     this.snackBar.open(texto, "Cerrar", { duration: 5000 });
   }
 
   comprobarAlertas(info) {
-    if (info.dato1 < 250 && info.dato1 >230) {
+    if (info.dato1 < 250 && info.dato1 >190) {
       this.mostrarAlertaGasolinaBaja()
     }
     if (info.dato2 > 35) {
       this.mostrarAlertaTemperaturaAlta();
     }
-    if (info.dato1 < 100 && info.dato1 > 95) {
+    if (info.dato1 < 100 && info.dato1 > 80) {
       this.mostrarAlertaPesoMuerto();
+    }
+    if (info.dato1 >=480 && info.dato1 <= 530) {
+      this.mostrarAlertaLleno();
     }
   }
 
